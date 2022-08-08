@@ -9,6 +9,7 @@
 			  "error",
 			  "LabeledStatement",
 			  "WithStatement"
-		 ]
+		 ],
+		 "max-len": 0
   }
 }
