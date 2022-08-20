@@ -1,40 +1,15 @@
-const person = {
-  name: 'мечник', health: 10, level: 2, attack: 80, defence: 40,
-};
+export default function orderByProps(obj, [key1, key2]) {
+  // Сохранить список ключех исходного объекта (Object.keys)
+  const allKeysArr = Object.keys(obj);
 
-function orderByProps(obj, [key1, key2]) {
-  const resultArr1 = [];
+  // Отфильтровать ключи, которые не нужно сортировать (Array.prototype.filter)
+  const givenKeysArr = allKeysArr.filter((item) => item === key1 || item === key2);
 
-  resultArr1.push({ key: key1, value: obj[key1] });
-  resultArr1.push({ key: key2, value: obj[key2] });
-  console.log(resultArr1);
+  // Отсортировать ключи, которые нужно сортировать: (Array.prototype.sort)
+  const sortedKeysArr = allKeysArr.filter((item) => item !== key1 && item !== key2).sort();
 
-  // let check1 = resultArr1[0].key.includes(key1);
-  // let check2 = resultArr1[1].key.includes(key2);
-  // console.log(check1);
-  // console.log(check2);
-
-  const resultArr2 = [];
-
-  for (const key in obj) {
-    // не могу понянть, почему конструкция if ниже не срабатывает.
-    // как мне добавить в массив только те свойства, которых нет в resultArr1 ???
-    if (!resultArr1[0].key.includes(key1) || !resultArr1[1].key.includes(key2)) {
-      resultArr2.push({ key, value: obj[key] });
-      resultArr2.sort((a, b) => (a.key > b.key ? 1 : -1));
-    }
-  }
-  console.log(resultArr2);
-
-  return [...resultArr1, ...resultArr2];
+  // Объединить массив, пройтись по нему (Array.prototype.map) и дать ответ
+  const resulrkeysArr = [...givenKeysArr, ...sortedKeysArr];
+  const result = resulrkeysArr.map((item) => ({ key: item, value: obj[item] }));
+  return result;
 }
-
-console.log(orderByProps(person, ['name', 'level']));
-
-// [
-//   {key: "name", value: "мечник"}, // порядок взят из массива с ключами
-//   {key: "level", value: 2}, // порядок взят из массива с ключами
-//   {key: "attack", value: 80}, // порядок по алфавиту (т.к. в массиве с ключами нет значения "attack")
-//   {key: "defence", value: 40}, // порядок по алфавиту (т.к. в массиве с ключами нет значения "defence")
-//   {key: "health", value: 10} // порядок по алфавиту (т.к. в массиве с ключами нет значения "health")
-// ]
