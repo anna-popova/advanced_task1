@@ -1,15 +1,19 @@
-export default function orderByProps(obj, [key1, key2]) {
-  // Сохранить список ключех исходного объекта (Object.keys)
-  const allKeysArr = Object.keys(obj);
+function orderByProps(obj, props) {
+  const propsArr = [];
+  const sortArr = [];
 
-  // Отфильтровать ключи, которые не нужно сортировать (Array.prototype.filter)
-  const givenKeysArr = allKeysArr.filter((item) => item === key1 || item === key2);
+  for (const key in obj) {
+    if (props.includes(key)) {
+      propsArr.push({key, value: obj[key],});
+    } else {
+      sortArr.push({key, value: obj[key],});
+    }
+  }
+  // console.log(propsArr);
+  // console.log(sortArr);
 
-  // Отсортировать ключи, которые нужно сортировать: (Array.prototype.sort)
-  const sortedKeysArr = allKeysArr.filter((item) => item !== key1 && item !== key2).sort();
-
-  // Объединить массив, пройтись по нему (Array.prototype.map) и дать ответ
-  const resulrkeysArr = [...givenKeysArr, ...sortedKeysArr];
-  const result = resulrkeysArr.map((item) => ({ key: item, value: obj[item] }));
-  return result;
+  sortArr.sort((a, b) => a.key > b.key ? 1 : -1);
+  // console.log(sortArr);
+  
+  return [...propsArr, ...sortArr];
 }
